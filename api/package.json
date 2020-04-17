@@ -1,0 +1,26 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "CovidReportMZ API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest"
+  },
+  "repository": "https://github.com/kradnoel/CovidReportMZ/api",
+  "author": "Djamal dos Santos <djamal.dos.santos@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parse": "^0.1.0",
+    "cheerio": "^1.0.0-rc.3",
+    "compression": "^1.7.4",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.22.0",
+    "lodash": "^4.17.15",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "jest": "^25.3.0"
+  }
+}
