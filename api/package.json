@@ -11,6 +11,7 @@
   "author": "Djamal dos Santos <djamal.dos.santos@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.19.2",
     "body-parse": "^0.1.0",
     "cheerio": "^1.0.0-rc.3",
     "compression": "^1.7.4",
