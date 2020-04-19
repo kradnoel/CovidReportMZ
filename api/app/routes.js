@@ -7,7 +7,12 @@ const {sendResponse, fetchStatus} = require('./helpers')
 const {fetchStats, fetchFaqs, fetchSingleQA} = require('./covid19mz')
 
 //Routes
-router.get('/stats', async(req, res) => 
+
+router.get('/', async(req, res) =>
+  res.render('index.html')
+)
+
+router.get('/stats', async(req, res) =>
     sendResponse(res)(fetchStats())
 )
 

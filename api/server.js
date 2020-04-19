@@ -10,6 +10,9 @@ const express = require('express')
 // Create an Express application
 const app = express()
 
+// Configuring engine
+app.engine('html', require('ejs').renderFile);
+
 // Load middlewares
 app.use(logger(config.LOGGER))
 app.use(compression())
