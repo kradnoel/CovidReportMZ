@@ -7,6 +7,9 @@
     "start": "node index.js",
     "test": "jest"
   },
+  "engines": {
+    "node": "12.x"
+  },
   "repository": "https://github.com/kradnoel/CovidReportMZ/api",
   "author": "Djamal dos Santos <djamal.dos.santos@gmail.com>",
   "license": "MIT",
