@@ -87,6 +87,17 @@ const extractCovid19mzQAs =  ($) => {
 }
 
 /**
+ _ Recieve a list of QA
+ _ and return a single random QA
+**/
+const fetchRandomQAValue = (items)  => {
+  const values = items.faqs
+  return Promise.resolve(
+    values[Math.floor(Math.random() * (values.length - 1))]
+  ).then((value) => (value))
+}
+
+/**
  _ Extract the group of stats from the page
  _ and returns the stats object
 **/
@@ -104,7 +115,21 @@ const fetchFaqs = items => {
    return composeAsync(extractCovid19mzQAs, fetchHtmlFromUrl)(COVID19MZ)
 }
 
+/**
+ _ Extract the group of stats from the page
+ _ and returns single random value
+**/
+
+const fetchSingleQA = () => {
+  return composeAsync(fetchRandomQAValue ,fetchFaqs)()
+}
+
+/**
+
+**/
+
 module.exports = {
     fetchStats,
-    fetchFaqs
+    fetchFaqs,
+    fetchSingleQA
 }
