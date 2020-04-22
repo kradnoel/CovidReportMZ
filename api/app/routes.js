@@ -4,6 +4,7 @@ const router = express.Router()
 
 // Require the needed functions
 const {sendResponse, fetchStatus} = require('./helpers')
+const {SubscribeUser, UnSubscribeUser} = require('./parse')
 const {fetchStats, fetchFaqs, fetchSingleQA} = require('./covid19mz')
 
 //Routes
@@ -23,6 +24,16 @@ router.get('/faqs', async(req, res) =>
 router.get('/faqs/1', async(req, res) =>
     sendResponse(res)(fetchSingleQA())
 )
+
+router.post('/subscribe', async(req, res) => {
+  var contact = req.body.contact
+  sendResponse(res)(SubscribeUser(contact))
+})
+
+router.post('/unsubscribe', async(req, res) => {
+  var contact = req.body.contact
+  sendResponse(res)(UnSubscribeUser(contact))
+})
 
 router.get('/health', async(req, res) =>
     sendResponse(res)(fetchStatus())
