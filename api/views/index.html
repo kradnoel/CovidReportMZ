@@ -119,6 +119,66 @@
     </div>
   </div>
 
+  <div class="card-deck mb-2 text-center">
+    <div class="card mb-2 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">Subscribe User</h4>
+      </div>
+      <div class="card-body">
+        <code>POST <span style="color:#d14;">https://covidreportmz-api.herokuapp.com/subscribe</span> HTTP/1.1</code>
+        <code>
+          Content-Type: application/json
+          Accept: application/json
+          {
+            "contact": "87..."
+          }
+        </code>
+        <code>
+          HTTP/1.1 200 OK
+          Content-Type: application/json
+          {
+            "status": "success",
+            "code": 200,
+            "data": {
+            "error": false,
+              "message": "+25887... foi subscrito com sucesso."
+            }
+          }
+        </code>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-deck mb-2 text-center">
+    <div class="card mb-2 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">Unsubscribe User</h4>
+      </div>
+      <div class="card-body">
+        <code>POST <span style="color:#d14;">https://covidreportmz-api.herokuapp.com/subscribe</span> HTTP/1.1</code>
+        <code>
+          Content-Type: application/json
+          Accept: application/json
+          {
+            "contact": "87..."
+          }
+        </code>
+        <code>
+          HTTP/1.1 200 OK
+          Content-Type: application/json
+          {
+            "status": "success",
+            "code": 200,
+            "data": {
+            "error": false,
+              "message": "+25887... foi removida a subscrição com sucesso."
+            }
+          }
+        </code>
+      </div>
+    </div>
+  </div>
+
   <footer class="pt-4 my-md-5 pt-md-5 border-top">
     <div class="row">
       <div class="col-12 col-md">
