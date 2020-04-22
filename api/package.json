@@ -14,6 +14,7 @@
   "author": "Djamal dos Santos <djamal.dos.santos@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "awesome-phonenumber": "^2.30.0",
     "axios": "^0.19.2",
     "body-parse": "^0.1.0",
     "cheerio": "^1.0.0-rc.3",
