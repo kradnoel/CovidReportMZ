@@ -9,7 +9,7 @@ const twilio = require('twilio')(config.TWILIO_ACCOUNT_SID, config.TWILIO_AUTH_T
 ///////////////////////////////////////////////////////////////////////////////
 
 const SendSMS = (sento_to, message) => {
-	return twilio_client.api.messages
+	return twilio.api.messages
 		.create({
 			body: message,
 			to: sento_to,

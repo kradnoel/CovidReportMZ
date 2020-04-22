@@ -3,6 +3,8 @@
 const config = require('./config')
 const lang = require('./lang')
 const {fetchMozambicanPhoneNumber, composeAsync} = require('./helpers')
+const {fetchStats} = require('./covid19mz')
+const {SendSMS} =require('./twilio')
 const Parse = require('parse/node')
 
 Parse.initialize(config.PARSER.APP_ID, config.PARSER.JS_KEY)
@@ -56,13 +58,13 @@ const subscribeUser = async (value) => {
       subscriber.set('contact', values.contact.value)
       subscriber.save()
 
-      log.set('message', `${values.contact.value} ${lang.PT.SUBSCRIBED_SUCESS}`)
+      log.set('message', `${values.contact.value} ${lang.PT.SUBSCRIBED_SUCCESS}`)
       log.set('error', false)
       log.save()
 
       message = {
         "error": false,
-        "message": `${values.contact.value} ${lang.PT.SUBSCRIBED_SUCESS}`
+        "message": `${values.contact.value} ${lang.PT.SUBSCRIBED_SUCCESS}`
       }
     } else {
       message = {
@@ -95,13 +97,13 @@ const unsubscribeUser = async (value) => {
     var subscriber = await query.equalTo('objectId', values.value).first()
     subscriber.destroy()
 
-    log.set('message', `${values.contact.value} ${lang.PT.UNSUBSCRIBED_SUCESS}`)
+    log.set('message', `${values.contact.value} ${lang.PT.UNSUBSCRIBED_SUCCESS}`)
     log.set('error', false)
     log.save()
 
     message = {
       "error": false,
-      "message": `${values.contact.value} ${lang.PT.UNSUBSCRIBED_SUCESS}`
+      "message": `${values.contact.value} ${lang.PT.UNSUBSCRIBED_SUCCESS}`
     }
 
   }else{
@@ -131,5 +133,40 @@ const UnSubscribeUser = (contact) => {
   return composeAsync(unsubscribeUser, isUserSubscribed)(contact)
 }
 
+/**
+ _ Send SMS to subscribed users
+**/
+const SendSmsToSubscribedUsers = () => {
+	var Subscriber = Parse.Object.extend("Subscriber")
+	var query = new Parse.Query(Subscriber)
 
-module.exports = { SubscribeUser, UnSubscribeUser }
+	query.find().then((subscribers) => {
+		fetchStats().then((values) => {
+			var message = `${lang.PT.COVID19_DATA}. ${values.date}. `
+			values.stats.forEach((value) => {
+				message += `${value.title} = ${value.total}, `
+			})
+
+			for(let i = 0; i < subscribers.length; i++) {
+				var subscriber = subscribers[i]
+				var log = new Log()
+
+				SendSMS(subscriber.get('contact'), message).then((v) => {
+					console.log(v)
+					log.set('message', v)
+					log.set('error', false)
+					log.save()
+				}).catch((e) => {
+					console.log(e)
+					log.set('message', e)
+					log.set('error', true)
+					log.save()
+				})
+			}
+
+		}).catch((e) => console.log(e))
+	}).catch((e) => console.log(e))
+}
+
+
+module.exports = { SubscribeUser, UnSubscribeUser, SendSmsToSubscribedUsers }
