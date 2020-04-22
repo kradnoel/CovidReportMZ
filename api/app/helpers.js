@@ -1,7 +1,9 @@
 // Require dependencies
 const _ = require('lodash')
-const axios = require("axios")
-const cheerio = require("cheerio")
+const axios = require('axios')
+const cheerio = require('cheerio')
+const PhoneNumber = require('awesome-phonenumber')
+const lang = require('./lang')
 
 ///////////////////////////////////////////////////////////////////////////////
 // UTILITY FUNCTIONS
@@ -60,7 +62,7 @@ const sendResponse = (res) => async (request) => {
   return await request
     .then(data => res.json({ status: "success", code: res.statusCode, data }))
     .catch(({ status: code = 500 }) =>
-      res.status(code).json({ status: "failure", code, message: code == 404 ? 'Not found.' : 'Request failed.' })
+      res.status(code).json({ status: "failure", code, message: code == 404 ? `${lang.PT.ERROR_NOT_FOUND}`: `${lang.PT.ERROR_REQUEST_FAILED}` })
     )
 }
 
@@ -82,8 +84,20 @@ const fetchHtmlFromUrl = async (url) => {
  _ Return the status of the API
 **/
 const fetchStatus = () => {
-    const message = 'Server is alive.'
+    const message = `${lang.PT.SERVER_ALIVE}`
     return Promise.resolve((message)).then((message) => message)
+}
+
+/**
+ _ Validate the contact
+ _ and return state (true or false) and value on e164 format
+**/
+
+const fetchMozambicanPhoneNumber = (contact) => {
+  const country_code = 'MZ'
+  const pn = new PhoneNumber(contact, country_code)
+  const number = {'state': pn.isValid(), 'value': pn.getNumber('e164')}
+  return number
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -122,6 +136,7 @@ module.exports = {
   withoutNulls,
   sendResponse,
   fetchStatus,
+  fetchMozambicanPhoneNumber,
   fetchHtmlFromUrl,
   fetchElemInnerText,
   fetchElemAttribute,
